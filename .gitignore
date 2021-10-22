@@ -1,0 +1,7 @@
+*.pyc
+games/rock_paper_scissor/contestants/__pycache__/player1.cpython-38.pyc
+games/rock_paper_scissor/contestants/__pycache__/player1.cpython-39.pyc
+games/rock_paper_scissor/contestants/__pycache__/player2.cpython-38.pyc
+games/rock_paper_scissor/contestants/__pycache__/player2.cpython-39.pyc
+games/rock_paper_scissor/contestants/__pycache__/player3.cpython-38.pyc
+games/rock_paper_scissor/contestants/__pycache__/player3.cpython-39.pyc
