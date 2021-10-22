@@ -1,11 +1,15 @@
-from games.rock_paper_scissor.contestant_template import ContestantTemplate, Action
-from random import choice
+from games.game_log import GameLog
+from games.rock_paper_scissor.contestant_custom import ContestantCustom, Action
 
-class Contestant(ContestantTemplate):
-    def action(self) -> Action.__mro__[0]:
-        if self.previous_actions['opponent'] == Action.ROCK:
+class Contestant(ContestantCustom):
+    def action(self, game_log:dict) -> Action.__mro__[0]:
+        opponents_last_move = None
+        if game_log['opponents']['moves'][0]:
+            opponents_last_move = game_log['opponents'][0][-1]
+
+        if opponents_last_move == Action.ROCK:
             return Action.PAPER
-        elif self.previous_actions['opponent'] == Action.PAPER:
+        elif opponents_last_move == Action.PAPER:
             return Action.SCISSOR
         else: # initial move and if self.previous_actions['opponent'] == Action.SCISSOR:
             return Action.ROCK
