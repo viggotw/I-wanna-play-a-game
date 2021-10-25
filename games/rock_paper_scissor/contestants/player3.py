@@ -5,7 +5,7 @@ class Contestant(ContestantCustom):
     def action(self, game_log:dict) -> Action.__mro__[0]:
         opponents_last_move = None
         if game_log['opponents']['moves'][0]:
-            opponents_last_move = game_log['opponents'][0][-1]
+            opponents_last_move = game_log['opponents']['moves'][0][-1]
 
         if opponents_last_move == Action.ROCK:
             return Action.PAPER

@@ -1,45 +1,50 @@
 from games.game_environment_general import GameEnvironmentGeneral
 from games.rock_paper_scissor.contestant_custom import Action
-from games.rock_paper_scissor.config import MAX_PLAYERS, TURN_BASED
+from games.rock_paper_scissor.config import ITERATIONS, MAX_PLAYERS, TURN_BASED
 
 class GameEnvironment(GameEnvironmentGeneral):
     def __init__(self):
-        super().__init__(MAX_PLAYERS, TURN_BASED)
+        super().__init__(ITERATIONS, MAX_PLAYERS, TURN_BASED)
 
-    def get_reward(self, actions):
-        p1_action = actions[0]
-        p2_action = actions[1]
+    def get_reward(self, moves):
+        players = list(moves.keys())
+        actions = [moves[player] for player in players]
 
         # Sanity-check on player actions
-        assert p1_action in Action
-        assert p2_action in Action
+        assert actions[0] in Action
+        assert actions[1] in Action
         
         # DRAW
-        if p1_action == p2_action:
-            p1_score = 0
-            p2_score = 0
+        if actions[0] == actions[1]:
+            rewards = [0, 0]
+            winner = None
 
         # PLAYER 0 WINS
-        elif (p1_action == Action.ROCK and p2_action == Action.SCISSOR) \
-            or (p1_action == Action.PAPER and p2_action == Action.ROCK) \
-            or (p1_action == Action.SCISSOR and p2_action == Action.PAPER):
-            p1_score = 1
-            p2_score = 0
+        elif (actions[0] == Action.ROCK and actions[1] == Action.SCISSOR) \
+            or (actions[0] == Action.PAPER and actions[1] == Action.ROCK) \
+            or (actions[0] == Action.SCISSOR and actions[1] == Action.PAPER):
+            rewards = [1, 0]
+            winner = players[0]
         
         # PLAYER 1 WINS
-        elif (p1_action == Action.ROCK and p2_action == Action.PAPER) \
-            or (p1_action == Action.PAPER and p2_action == Action.SCISSOR) \
-            or (p1_action == Action.SCISSOR and p2_action == Action.ROCK):
-            p1_score = 0
-            p2_score = 1
+        elif (actions[0] == Action.ROCK and actions[1] == Action.PAPER) \
+            or (actions[0] == Action.PAPER and actions[1] == Action.SCISSOR) \
+            or (actions[0] == Action.SCISSOR and actions[1] == Action.ROCK):
+            rewards = [0, 1]
+            winner = players[1]
 
         self.game_over = True
 
-        return [p1_score, p2_score]
-
-    def reset_players(self):
-        for player in self.players:
-            player.reset()
-
-    def get_results(self):
-        return [player.scores['self'] for player in self.players]
+        return {
+            'winner': winner,
+            'players': {
+                players[0]: {
+                    'action': actions[0],
+                    'reward': rewards[0]
+                },
+                players[1]: {
+                    'action': actions[1],
+                    'reward': rewards[1]
+                }
+            }
+        }
