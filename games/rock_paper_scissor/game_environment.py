@@ -1,3 +1,4 @@
+import sys
 from games.game_environment_general import GameEnvironmentGeneral
 from games.rock_paper_scissor.contestant_custom import Action
 from games.rock_paper_scissor.config import ITERATIONS, MAX_PLAYERS, TURN_BASED
@@ -18,6 +19,7 @@ class GameEnvironment(GameEnvironmentGeneral):
         if actions[0] == actions[1]:
             rewards = [0, 0]
             winner = None
+            print("X", end='')
 
         # PLAYER 0 WINS
         elif (actions[0] == Action.ROCK and actions[1] == Action.SCISSOR) \
@@ -25,6 +27,7 @@ class GameEnvironment(GameEnvironmentGeneral):
             or (actions[0] == Action.SCISSOR and actions[1] == Action.PAPER):
             rewards = [1, 0]
             winner = players[0]
+            print("<", end='')
         
         # PLAYER 1 WINS
         elif (actions[0] == Action.ROCK and actions[1] == Action.PAPER) \
@@ -32,8 +35,10 @@ class GameEnvironment(GameEnvironmentGeneral):
             or (actions[0] == Action.SCISSOR and actions[1] == Action.ROCK):
             rewards = [0, 1]
             winner = players[1]
+            print(">", end='')
 
         self.game_over = True
+        sys.stdout.flush()  # Forces the buffer to be written to stdout
 
         return {
             'winner': winner,

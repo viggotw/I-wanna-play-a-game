@@ -26,28 +26,35 @@ class Tournament():
         }
 
         # Execute all matches
-        for players in matches:
-            print(f"*** {players} ***")
+        for match_id, players in enumerate(matches):
+            print(f"*** Match {match_id+1} (out of {len(matches)}):  {' vs. '.join(player.name for player in players)} ***")
+            # Execute one game
             stats_current = game.play(players)
 
+            # Update global score board
             for player in players:
                 for key in self.stats_global[player]:
                     self.stats_global[player][key] += stats_current[player][key]
-
+                sleep(1)
                 print(f"{player}: {stats_current[player]['wins']} wins")
             print()
             sleep(1)
 
+        self._print_scores()
+        
+
+    def _print_scores(self):
         scores = {str(player): stats['wins'] for player, stats in self.stats_global.items()}
-        print('FINAL SCORES')
-        print(json.dumps(dict(sorted(scores.items(), key=lambda item: item[1], reverse=True)), indent=4))
 
-
-        # Calculate scoreboard and appoint a winner
-        #print(self.stats_global)
-
-
-
+        input("Tournament ended. Press a key to get results...\n\n")
+        print('*** FINAL SCORES ***')
+        print("Placement       Name            Score")
+        scores_sorted = dict(sorted(scores.items(), key=lambda item: item[1], reverse=False))
+        for inv_placement, (player, score) in enumerate(scores_sorted.items()):
+            placement = len(scores_sorted) - inv_placement
+            sleep(2)
+            print(f"{placement:>9}\t{player:<15}\t{score:>5}")
+            
 
     def _load_game_environment_class(self, game_name):
         return import_module(f'games.{game_name}.game_environment')

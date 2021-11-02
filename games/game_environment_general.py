@@ -1,4 +1,5 @@
 from games.game_log import GameLog
+from time import sleep
 
 class GameEnvironmentGeneral():
     def __init__(self, iterations, max_players, turn_based):
@@ -52,7 +53,9 @@ class GameEnvironmentGeneral():
                     stats[player]['loss'] += 1
 
             self.restart_game()
+            sleep(0.2)
 
+        print()
 
         for player in players:
             stats[player]['actions'] = self.shared_game_log.get_previous_moves(player)
