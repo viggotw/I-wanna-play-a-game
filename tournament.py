@@ -46,7 +46,7 @@ class Tournament():
     def _print_scores(self):
         scores = {str(player): stats['wins'] for player, stats in self.stats_global.items()}
 
-        input("Tournament ended. Press a key to get results...\n\n")
+        input("Tournament ended. Press a ENTER to get results...\n\n")
         print('*** FINAL SCORES ***')
         print("Placement       Name            Score")
         scores_sorted = dict(sorted(scores.items(), key=lambda item: item[1], reverse=False))
