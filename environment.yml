@@ -1,0 +1,9 @@
+name: progo
+channels:
+  - conda-forge
+  - anaconda
+  - defaults
+dependencies:
+  - pip=21.2.4
+  - pydantic
+  - python=3.9.7
