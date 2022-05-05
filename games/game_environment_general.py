@@ -1,3 +1,4 @@
+from typing import Union
 from games.game_log import GameLog
 from time import sleep
 
@@ -7,7 +8,6 @@ class GameEnvironmentGeneral():
             'wins',  # Each round ends with a winner. The final winner is the player with the most wins
             'score'  # Each round ends with a score. The final winner is the player with the highest total score
         ]
-
         self.ITERATIONS = iterations
         self.MAX_PLAYERS = max_players
         self.TURN_BASED = turn_based  # Either turn-based or simultanous player execution
@@ -16,7 +16,7 @@ class GameEnvironmentGeneral():
         self.game_over = False
         self.shared_game_log = None
 
-    def play(self, players):
+    def play(self, players, extra_info:Union[list[dict], dict, None]=None):
         ''' Executes a game played between 'players'. One game may consist of several rounds'''
         self.shared_game_log = GameLog(players)
         stats = {}
@@ -27,22 +27,30 @@ class GameEnvironmentGeneral():
                 'wins': 0
             }
             
-        for _ in range(self.ITERATIONS):  # A game may consist of multiple rounds or iterations
+        for i in range(self.ITERATIONS):  # A game may consist of multiple rounds or iterations
+            if extra_info:
+                if isinstance(extra_info, dict):
+                    data = extra_info
+                elif isinstance(extra_info, list):
+                    data = extra_info[i]
+
             while not self.game_over:  # A game is always played until the game_over stop criterion is set to True
+                # Players do their action
                 if self.TURN_BASED:  # Turn-based games enables the players to view the log of previous players from that round
                     for player in players:
-                        action = player.action(self.shared_game_log.subjectify(player))
+                        action = player.action(self.shared_game_log.subjectify(player, data))
                         self.shared_game_log.update_move(player, action)
-
                 else:  # If not turn-based, all players submit their action without any knowledge of the opponents actions
                     actions = []
                     for player in players:
-                        action = player.action(self.shared_game_log.subjectify(player))
+                        action = player.action(self.shared_game_log.subjectify(player, data))
                         actions.append(action)
                     self.shared_game_log.update_moves(players, actions)
 
-                result = self.get_reward(self.shared_game_log.get_last_move())
+                # Based on player actions, calculate reward
+                result = self.get_reward(self.shared_game_log.get_last_move(), data)
                 
+                # Upodate game log
                 scores = [result['players'][player]['reward'] for player in players]
                 self.shared_game_log.update_scores(list(players), scores)
 
@@ -71,11 +79,30 @@ class GameEnvironmentGeneral():
         return stats
                 
 
-    # def get_reward(self, action):
-    #     raise NotImplemented()
+    def get_reward(self, moves:dict) -> dict:
+        """ Game logic
+        This should be implemented in each game environment in a class GameEnvironment(GameEnvironmentGeneral)"
+        This is where you omplement the game logic, deciding which player is the winner and what reward they get.
+        
+        :param moves: A dictionary with keys that equal the player name and a value
+                      that is one of the possible Actions.
+                      E.g: {'player1_name': Action1, 'player2_name': Action2}
+        :return dict:
+
+        The return format looks like this:
+        {
+            'winner': <key in the 'moves' input dict>,
+            'players': {
+                'players1': {
+                    'action': <defined in your contestant_template:Action>,
+                    'reward': <int of float>
+                },
+                ...
+            }
+        }
+        """
+        raise NotImplemented()
 
     def restart_game(self):
         self.game_over = False
 
-    def get_results(self):
-        raise NotImplemented()
