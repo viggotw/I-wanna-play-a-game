@@ -2,12 +2,13 @@ from games.game_log import GameLog
 from time import sleep
 
 class GameEnvironmentGeneral():
-    def __init__(self, iterations, max_players, turn_based):
+    def __init__(self, iterations, max_players, turn_based, suspense):
         self.ITERATIONS = iterations
         self.MAX_PLAYERS = max_players
         self.TURN_BASED = turn_based  # Either turn-based or simultanous player execution
         self.game_over = False
         self.shared_game_log = None
+        self.suspense = suspense
 
     def play(self, players):
         self.shared_game_log = GameLog(players)
@@ -53,7 +54,7 @@ class GameEnvironmentGeneral():
                     stats[player]['loss'] += 1
 
             self.restart_game()
-            sleep(0.2)
+            if self.suspense: sleep(0.2)
 
         print()
 

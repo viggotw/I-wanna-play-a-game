@@ -5,14 +5,15 @@ from itertools import combinations
 from time import sleep
 
 class Tournament():
-    def __init__(self, game_name) -> None:
+    def __init__(self, game_name, suspense=False) -> None:
         self.game_env = self._load_game_environment_class(game_name)
         self.contestants = self._load_contestants(game_name)
         self.stats = {}
+        self.suspense = suspense
 
     def run(self):
-        # Create all matches
-        game = self.game_env.GameEnvironment()
+        # Create all matches (all PvP combinations)
+        game = self.game_env.GameEnvironment(self.suspense)
         matches = list(combinations(self.contestants, game.MAX_PLAYERS))
         self.stats_global = {
             contestant: {
@@ -35,10 +36,10 @@ class Tournament():
             for player in players:
                 for key in self.stats_global[player]:
                     self.stats_global[player][key] += stats_current[player][key]
-                sleep(1)
+                if self.suspense: sleep(1)
                 print(f"{player}: {stats_current[player]['wins']} wins")
             print()
-            sleep(1)
+            if self.suspense: sleep(1)
 
         self._print_scores()
         
@@ -46,13 +47,14 @@ class Tournament():
     def _print_scores(self):
         scores = {str(player): stats['wins'] for player, stats in self.stats_global.items()}
 
-        input("Tournament ended. Press a key to get results...\n\n")
+        print("Tournament ended. Press a key to get results...")
+        if self.suspense: input("\n")  # Requires a manual input before showing final score
         print('*** FINAL SCORES ***')
         print("Placement       Name            Score")
         scores_sorted = dict(sorted(scores.items(), key=lambda item: item[1], reverse=False))
         for inv_placement, (player, score) in enumerate(scores_sorted.items()):
             placement = len(scores_sorted) - inv_placement
-            sleep(2)
+            if self.suspense: sleep(2)
             print(f"{placement:>9}\t{player:<15}\t{score:>5}")
             
 
