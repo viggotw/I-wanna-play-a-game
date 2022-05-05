@@ -1,13 +1,18 @@
 import sys
 from games.game_environment_general import GameEnvironmentGeneral
 from games.rock_paper_scissor.contestant_template import Action
-from games.rock_paper_scissor.config import ITERATIONS, NUM_PLAYERS, TURN_BASED
+from games.rock_paper_scissor.config import ITERATIONS, NUM_PLAYERS, TURN_BASED, WIN_CRITERIA
 
 class GameEnvironment(GameEnvironmentGeneral):
     def __init__(self, suspense):
-        super().__init__(ITERATIONS, NUM_PLAYERS, TURN_BASED, suspense)
+        super().__init__(ITERATIONS, NUM_PLAYERS, TURN_BASED, WIN_CRITERIA, suspense)
 
     def get_reward(self, moves):
+        ''' Calculate the score of each player
+        :param moves: A dictionary with keys that equal the player name and a value
+                      that is one of the possible Actions.
+                      E.g: {'player1_name': Action1, 'player2_name': Action2}
+        '''
         players = list(moves.keys())
         actions = [moves[player] for player in players]
 

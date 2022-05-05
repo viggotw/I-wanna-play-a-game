@@ -2,29 +2,32 @@ from games.game_log import GameLog
 from time import sleep
 
 class GameEnvironmentGeneral():
-    def __init__(self, iterations, max_players, turn_based, suspense):
+    def __init__(self, iterations, max_players, turn_based, win_criteria, suspense):
+        assert win_criteria in [
+            'wins',  # Each round ends with a winner. The final winner is the player with the most wins
+            'score'  # Each round ends with a score. The final winner is the player with the highest total score
+        ]
+
         self.ITERATIONS = iterations
         self.MAX_PLAYERS = max_players
         self.TURN_BASED = turn_based  # Either turn-based or simultanous player execution
+        self.WIN_CRITERIA = win_criteria
+        self.suspense = suspense
         self.game_over = False
         self.shared_game_log = None
-        self.suspense = suspense
 
     def play(self, players):
+        ''' Executes a game played between 'players'. One game may consist of several rounds'''
         self.shared_game_log = GameLog(players)
-        stats = {
-            player: {
-                'num_matches': 0,
+        stats = {}
+        for player in players:
+            stats[player] = {
                 'actions': [],
                 'score': 0,
-                'wins': 0,
-                'draw': 0,
-                'loss': 0,
-            } for player in players
-        }
-        
-        for _ in range(self.ITERATIONS):  # A game may consist of multiple rounds or iterations
+                'wins': 0
+            }
             
+        for _ in range(self.ITERATIONS):  # A game may consist of multiple rounds or iterations
             while not self.game_over:  # A game is always played until the game_over stop criterion is set to True
                 if self.TURN_BASED:  # Turn-based games enables the players to view the log of previous players from that round
                     for player in players:
@@ -42,25 +45,28 @@ class GameEnvironmentGeneral():
                 
                 scores = [result['players'][player]['reward'] for player in players]
                 self.shared_game_log.update_scores(list(players), scores)
-                
-            # Update tournament stats
-            for player in players:
-                stats[player]['num_matches'] += 1
-                if not result['winner']:
-                    stats[player]['draw'] += 1
-                elif result['winner'] == player:
-                    stats[player]['wins'] += 1
-                else:
-                    stats[player]['loss'] += 1
 
             self.restart_game()
             if self.suspense: sleep(0.2)
 
         print()
 
+        
+        winners = []
+        best_score = 0
+
         for player in players:
             stats[player]['actions'] = self.shared_game_log.get_previous_moves(player)
             stats[player]['score'] = self.shared_game_log.get_scores(player)
+        
+            if stats[player]['score'] > best_score:
+                winners = [player]
+                best_score = stats[player]['score']
+            elif stats[player]['score'] == best_score:
+                winners.append(player)
+                
+        for player in winners:
+            stats[player]['wins'] = 1
 
         return stats
                 
