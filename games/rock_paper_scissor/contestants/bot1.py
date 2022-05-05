@@ -1,4 +1,4 @@
-from games.rock_paper_scissor.contestant_custom import ContestantCustom, Action
+from games.rock_paper_scissor.contestant_template import ContestantTemplate, Action
 
 ''' GAME_LOG STRUCTURE
 {
@@ -13,6 +13,6 @@ from games.rock_paper_scissor.contestant_custom import ContestantCustom, Action
 }
 '''
 
-class Contestant(ContestantCustom):
+class Contestant(ContestantTemplate):
     def action(self, game_log:dict) -> Action.__mro__[0]:
         return Action.ROCK

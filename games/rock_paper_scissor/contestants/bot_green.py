@@ -1,4 +1,4 @@
-from games.rock_paper_scissor.contestant_custom import ContestantCustom, Action
+from games.rock_paper_scissor.contestant_template import ContestantTemplate, Action
 
 ''' GAME_LOG STRUCTURE
 {
@@ -14,7 +14,7 @@ from games.rock_paper_scissor.contestant_custom import ContestantCustom, Action
 '''
 
 
-class Contestant(ContestantCustom):
+class Contestant(ContestantTemplate):
     last_score = 0
     losing_counter = 0
 

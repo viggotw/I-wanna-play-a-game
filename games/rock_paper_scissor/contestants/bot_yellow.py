@@ -1,4 +1,4 @@
-from games.rock_paper_scissor.contestant_custom import Action, ContestantCustom
+from games.rock_paper_scissor.contestant_template import Action, ContestantTemplate
 """ GAME_LOG STRUCTURE
 {
     'me': {
@@ -11,7 +11,7 @@ from games.rock_paper_scissor.contestant_custom import Action, ContestantCustom
     }
 }
 """
-class Contestant(ContestantCustom):
+class Contestant(ContestantTemplate):
     counter = 0
     def action(self, game_log: dict) -> Action.__mro__[0]:
         prev_opponent_move = game_log["opponents"]["moves"][0]

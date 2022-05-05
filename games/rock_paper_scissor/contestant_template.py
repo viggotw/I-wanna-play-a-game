@@ -6,6 +6,6 @@ class Action(Enum):
     PAPER = 'paper'
     SCISSOR = 'scissor'
 
-class ContestantCustom(ContestantGeneral):
+class ContestantTemplate(ContestantGeneral):
     def reset(self):
         pass  # TODO: Extend this

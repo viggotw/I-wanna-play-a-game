@@ -5,7 +5,7 @@ from itertools import combinations
 from time import sleep
 
 class Tournament():
-    def __init__(self, game_name, iter=100) -> None:
+    def __init__(self, game_name) -> None:
         self.game_env = self._load_game_environment_class(game_name)
         self.contestants = self._load_contestants(game_name)
         self.stats = {}

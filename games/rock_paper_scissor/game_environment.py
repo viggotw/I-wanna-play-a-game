@@ -1,11 +1,11 @@
 import sys
 from games.game_environment_general import GameEnvironmentGeneral
-from games.rock_paper_scissor.contestant_custom import Action
-from games.rock_paper_scissor.config import ITERATIONS, MAX_PLAYERS, TURN_BASED
+from games.rock_paper_scissor.contestant_template import Action
+from games.rock_paper_scissor.config import ITERATIONS, NUM_PLAYERS, TURN_BASED
 
 class GameEnvironment(GameEnvironmentGeneral):
     def __init__(self):
-        super().__init__(ITERATIONS, MAX_PLAYERS, TURN_BASED)
+        super().__init__(ITERATIONS, NUM_PLAYERS, TURN_BASED)
 
     def get_reward(self, moves):
         players = list(moves.keys())

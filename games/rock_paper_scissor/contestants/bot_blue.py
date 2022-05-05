@@ -1,4 +1,4 @@
-from games.rock_paper_scissor.contestant_custom import ContestantCustom, Action
+from games.rock_paper_scissor.contestant_template import ContestantTemplate, Action
 ''' GAME_LOG STRUCTURE
 {
     'me': {
@@ -15,7 +15,7 @@ seed1 = [Action.SCISSOR, Action.ROCK, Action.SCISSOR, Action.ROCK, Action.ROCK]
 seed2 = [Action.PAPER, Action.SCISSOR, Action.SCISSOR, Action.ROCK, Action.PAPER]
 seed3 = [Action.SCISSOR, Action.PAPER, Action.ROCK, Action.SCISSOR, Action.ROCK]
 moves = iter((seed1 + seed2 + seed3)*11999)
-class Contestant(ContestantCustom):
+class Contestant(ContestantTemplate):
     def action(self, game_log:dict) -> Action.__mro__[0]:
         opponents_last_moves = []
         our_moves = game_log["me"]["moves"]

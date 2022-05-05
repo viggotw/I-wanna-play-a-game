@@ -2,7 +2,7 @@ import unittest
 import pkgutil
 from importlib import import_module
 from games import rock_paper_scissor
-from games.rock_paper_scissor.contestant_custom import Action
+from games.rock_paper_scissor.contestant_template import Action
 
 GAME_NAME = 'rock_paper_scissor'
 
