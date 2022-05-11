@@ -9,20 +9,23 @@ available_games = {
     'rock_paper_scissor': ['rock_paper_scissor', 'rps'],
     'generalized_prisonners_dilemma': ['generalized_prisonners_dilemma', 'gpd']
 }
+choices = [x for k in available_games for x in available_games[k]]
 
 # PArse command line arguments
 my_parser = argparse.ArgumentParser(prog=name, description=desc, epilog=epilog)
 
 my_parser.add_argument('game',
                        type=str,
-                       help=f"{[x for x in available_games.keys()]}",
-                       choices=[x for k in available_games for x in available_games[k]]
+                       metavar='game',
+                       help=f"Select game to play: {choices}",
+                       choices=choices
                        )
 
 my_parser.add_argument('-s', '--suspense',
                        type=bool,
                        default=False,
-                       help="[True, False] (Default: False) Set to True if you desire a more suspensfull tournament",
+                       metavar='',
+                       help="Set to `True` if you desire a more suspensfull tournament (default: `False`)",
                        required=False
                        )
 
