@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, List
 from games.game_log import GameLog
 from time import sleep
 
@@ -16,7 +16,7 @@ class GameEnvironmentGeneral():
         self.game_over = False
         self.shared_game_log = None
 
-    def play(self, players, extra_info:Union[list[dict], dict, None]=None):
+    def play(self, players, extra_info:Union[List[dict], dict, None]=None):
         ''' Executes a game played between 'players'. One game may consist of several rounds'''
         self.shared_game_log = GameLog(players)
         stats = {}
@@ -28,6 +28,7 @@ class GameEnvironmentGeneral():
             }
             
         for i in range(self.ITERATIONS):  # A game may consist of multiple rounds or iterations
+            data=None
             if extra_info:
                 if isinstance(extra_info, dict):
                     data = extra_info
@@ -79,7 +80,7 @@ class GameEnvironmentGeneral():
         return stats
                 
 
-    def get_reward(self, moves:dict) -> dict:
+    def get_reward(self, moves:dict, data=None) -> dict:
         """ Game logic
         This should be implemented in each game environment in a class GameEnvironment(GameEnvironmentGeneral)"
         This is where you omplement the game logic, deciding which player is the winner and what reward they get.

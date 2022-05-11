@@ -11,7 +11,7 @@ class GameEnvironment(GameEnvironmentGeneral):
         payoff_matrices = self._create_payoff_matrix(players)
         return super().play(players, extra_info=payoff_matrices)
 
-    def get_reward(self, moves:dict, data):
+    def get_reward(self, moves:dict, data=None):
         
         ''' Calculate the score of each player
         :param moves: A dictionary with keys that equal the player name and a value
