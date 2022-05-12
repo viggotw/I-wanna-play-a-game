@@ -8,7 +8,7 @@ desc = "Welcome to PROGO, a game where players compete by submitting a bot that 
 epilog = 'Hope you enjoy playing! :)'
 available_games = {
     'rock_paper_scissor': ['rock_paper_scissor', 'rps'],
-    'generalized_prisonners_dilemma': ['generalized_prisonners_dilemma', 'gpd']
+    'generalized_prisoners_dilemma': ['generalized_prisoners_dilemma', 'gpd']
 }
 choices = [x for k in available_games for x in available_games[k]]
 
@@ -42,7 +42,3 @@ for game_name, valid_names in available_games.items():
     
 print("No game found with that name")
 exit(1)
-
-# tournament = Tournament('rock_paper_scissor')
-# tournament = Tournament('generalized_prisonners_dilemma', suspense=False)
-# tournament.run()
