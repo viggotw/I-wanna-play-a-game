@@ -89,17 +89,18 @@ class GameLog():
         else:
             return self.previous_moves
 
-    def subjectify(self, player, extra_info:dict=None):
+    def subjectify(self, player, game_board:dict=None):
         ''' Transform the log into a subjective 'me vs. opponent' structure from the perspective of "key" that is easy for players to interact with
         :param player: key that exists in 'scores' and 'previous_moves'
-        :param extra_info: data that should be passed to the players. 
+        :param game_bord: the game board that should be passed to the players. 
                            This should be a dict containing all player keys
                            If this should be subjective to the player, this has to be done handled in advance
         Example input:
-        extra_info = 
+        game_board = 
         {
-            player1: [{'name': 'payoff_matrix', 'data': [[0, 2],[1,0]]}],
-            player2: [{'name': 'payoff_matrix', 'data': [[1, 0],[0,2]]}],
+            players[0]: {(...)},
+            players[1]: {(...)},
+            (...)
         }
         '''
 
@@ -112,11 +113,10 @@ class GameLog():
             'opponents': {
                 'score': self.get_scores(opponents),
                 'moves': self.get_previous_moves(opponents)
-            }
+            },
         }
 
-        if extra_info:
-            for info in extra_info[player]:
-                subjective_game_log[info['name']] = info['data']
+        if game_board:
+            subjective_game_log['game_board'] = game_board[player]
 
         return subjective_game_log

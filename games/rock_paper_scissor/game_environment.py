@@ -7,7 +7,7 @@ class GameEnvironment(GameEnvironmentGeneral):
     def __init__(self, suspense):
         super().__init__(ITERATIONS, NUM_PLAYERS, TURN_BASED, WIN_CRITERIA, suspense)
 
-    def get_reward(self, moves:dict, data=None):
+    def get_reward(self, moves:dict, game_board=None):
         ''' Calculate the score of each player
         :param moves: A dictionary with keys that equal the player name and a value
                       that is one of the possible Actions.
@@ -58,3 +58,6 @@ class GameEnvironment(GameEnvironmentGeneral):
                 }
             }
         }
+
+    def get_game_board(self, players, iteration:int):
+        return None

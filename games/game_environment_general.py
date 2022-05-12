@@ -16,7 +16,7 @@ class GameEnvironmentGeneral():
         self.game_over = False
         self.shared_game_log = None
 
-    def play(self, players, extra_info:Union[List[dict], dict, None]=None):
+    def play(self, players):
         ''' Executes a game played between 'players'. One game may consist of several rounds'''
         self.shared_game_log = GameLog(players)
         stats = {}
@@ -28,28 +28,23 @@ class GameEnvironmentGeneral():
             }
             
         for i in range(self.ITERATIONS):  # A game may consist of multiple rounds or iterations
-            data=None
-            if extra_info:
-                if isinstance(extra_info, dict):
-                    data = extra_info
-                elif isinstance(extra_info, list):
-                    data = extra_info[i]
+            game_board = self.get_game_board(players, i)
 
             while not self.game_over:  # A game is always played until the game_over stop criterion is set to True
                 # Players do their action
                 if self.TURN_BASED:  # Turn-based games enables the players to view the log of previous players from that round
                     for player in players:
-                        action = player.action(self.shared_game_log.subjectify(player, data))
+                        action = player.action(self.shared_game_log.subjectify(player, game_board))
                         self.shared_game_log.update_move(player, action)
                 else:  # If not turn-based, all players submit their action without any knowledge of the opponents actions
                     actions = []
                     for player in players:
-                        action = player.action(self.shared_game_log.subjectify(player, data))
+                        action = player.action(self.shared_game_log.subjectify(player, game_board))
                         actions.append(action)
                     self.shared_game_log.update_moves(players, actions)
 
                 # Based on player actions, calculate reward
-                result = self.get_reward(self.shared_game_log.get_last_move(), data)
+                result = self.get_reward(self.shared_game_log.get_last_move(), game_board)
                 
                 # Upodate game log
                 scores = [result['players'][player]['reward'] for player in players]
@@ -80,7 +75,7 @@ class GameEnvironmentGeneral():
         return stats
                 
 
-    def get_reward(self, moves:dict, data=None) -> dict:
+    def get_reward(self, moves:dict, game_board=dict) -> dict:
         """ Game logic
         This should be implemented in each game environment in a class GameEnvironment(GameEnvironmentGeneral)"
         This is where you omplement the game logic, deciding which player is the winner and what reward they get.
@@ -102,6 +97,11 @@ class GameEnvironmentGeneral():
             }
         }
         """
+        raise NotImplemented()
+
+    def get_game_board(self, iteration:int) -> dict:
+        ''' This method gets called at the beginning of each iteration, and allows you to modify the game board
+        '''
         raise NotImplemented()
 
     def restart_game(self):
