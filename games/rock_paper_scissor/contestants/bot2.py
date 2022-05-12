@@ -15,5 +15,5 @@ from random import choice
 '''
 
 class Contestant(ContestantTemplate):
-    def action(self, game_log:dict) -> Action.__mro__[0]:
+    def action(self, game_log:dict) -> Action:
         return choice([Action.ROCK, Action.PAPER, Action.SCISSOR])

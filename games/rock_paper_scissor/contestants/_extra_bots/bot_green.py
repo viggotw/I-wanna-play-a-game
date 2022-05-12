@@ -18,7 +18,7 @@ class Contestant(ContestantTemplate):
     last_score = 0
     losing_counter = 0
 
-    def strat_1(self, game_log:dict) -> Action.__mro__[0]:
+    def strat_1(self, game_log:dict) -> Action:
         opponents_last_move = None
         if game_log['opponents']['moves'][0]:
             opponents_last_move = game_log['opponents']['moves'][0][-1]

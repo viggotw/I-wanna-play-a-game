@@ -14,5 +14,5 @@ from games.rock_paper_scissor.contestant_template import ContestantTemplate, Act
 '''
 
 class Contestant(ContestantTemplate):
-    def action(self, game_log:dict) -> Action.__mro__[0]:
+    def action(self, game_log:dict) -> Action:
         return Action.ROCK

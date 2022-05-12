@@ -16,7 +16,7 @@ seed2 = [Action.PAPER, Action.SCISSOR, Action.SCISSOR, Action.ROCK, Action.PAPER
 seed3 = [Action.SCISSOR, Action.PAPER, Action.ROCK, Action.SCISSOR, Action.ROCK]
 moves = iter((seed1 + seed2 + seed3)*11999)
 class Contestant(ContestantTemplate):
-    def action(self, game_log:dict) -> Action.__mro__[0]:
+    def action(self, game_log:dict) -> Action:
         opponents_last_moves = []
         our_moves = game_log["me"]["moves"]
         if game_log['opponents']['moves'][0]:

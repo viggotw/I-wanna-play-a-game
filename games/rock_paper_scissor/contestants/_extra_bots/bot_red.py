@@ -17,7 +17,7 @@ def win_loss(action):
     pass
 
 class Contestant(ContestantTemplate):
-    def action(self, game_log:dict) -> Action.__mro__[0]:
+    def action(self, game_log:dict) -> Action:
         opponents_last_move = None
         if game_log['opponents']['moves'][0]:
             opponents_last_move = game_log['opponents']['moves'][0][-1]
