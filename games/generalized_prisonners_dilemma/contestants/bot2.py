@@ -34,5 +34,18 @@ Acces potential payoff in the payoff matrix like this:
 '''
 
 class Contestant(ContestantTemplate):
-    def action(self, game_log:dict) -> Action.__mro__[0]:
-        return Action.BETRAY
+    def action(self, game_log:dict) -> Action:
+        pm = game_log['game_board']  # payoff matrix
+        
+        # Check if cooperating is always best
+        if (pm[Action.COOPERATE, Action.COOPERATE] >= pm[Action.BETRAY, Action.COOPERATE]) and \
+           (pm[Action.COOPERATE, Action.BETRAY] >= pm[Action.BETRAY, Action.BETRAY]):
+           return Action.COOPERATE
+
+        # Check if betraying is always best
+        elif (pm[Action.BETRAY, Action.COOPERATE] >= pm[Action.COOPERATE, Action.COOPERATE]) and \
+             (pm[Action.BETRAY, Action.BETRAY] >= pm[Action.COOPERATE, Action.BETRAY]):
+            return Action.BETRAY
+
+        else:
+            return Action.COOPERATE

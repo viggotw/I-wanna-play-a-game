@@ -1,4 +1,5 @@
 from games.generalized_prisonners_dilemma.contestant_template import ContestantTemplate, Action
+from random import choice
 
 ''' GAME_LOG STRUCTURE
 {
@@ -34,10 +35,5 @@ Acces potential payoff in the payoff matrix like this:
 '''
 
 class Contestant(ContestantTemplate):
-    def action(self, game_log:dict) -> Action.__mro__[0]:
-        opponent_prev_moves = game_log['opponents']['moves'][0]
-        if opponent_prev_moves:
-            if opponent_prev_moves[-1] == Action.BETRAY:
-                return Action.BETRAY
-                
-        return Action.COOPERATE
+    def action(self, game_log:dict) -> Action:
+        return choice([Action.COOPERATE, Action.BETRAY])

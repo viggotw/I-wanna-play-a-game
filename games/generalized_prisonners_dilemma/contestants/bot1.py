@@ -34,5 +34,5 @@ Acces potential payoff in the payoff matrix like this:
 '''
 
 class Contestant(ContestantTemplate):
-    def action(self, game_log:dict) -> Action.__mro__[0]:
+    def action(self, game_log:dict) -> Action:
         return Action.COOPERATE
