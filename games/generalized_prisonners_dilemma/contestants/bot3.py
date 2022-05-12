@@ -12,20 +12,26 @@ from games.generalized_prisonners_dilemma.contestant_template import ContestantT
         'moves': [[]]
     }
     'payoff_matrix': {
-        'Action.COOPERATE': {
-            Action.COOPERATE: <int>
-            Action.BETRAY: <int>
-        }
-        'Action.BETRAY': {
-            Action.COOPERATE: <int>
-            Action.BETRAY: <int>
+        (Action.COOPERATE, Action.COOPERATE): (<int>,<int>)
+        (Action.BETRAY,    Action.COOPERATE): (<int>,<int>)
+        (Action.COOPERATE,    Action.BETRAY): (<int>,<int>)
+        (Action.BETRAY,       Action.BETRAY): (<int>,<int>)
         }
     }
 }
 
-PS! Acces potential payoff in the payoff matrix like this:
-    game_log[my action][opponents action]
-    E.g.: game_log[Action.BETRAY][Action.COOPERATE]
+The payoff matrix can be thought of as follows
+                                      opponent
+             |          Cooperate         |            Betray          |
+   ----------|----------------------------|----------------------------|
+   Cooperate | <score:me>,<score:opponen> | <score:me>,<score:opponen> |
+me ----------|----------------------------|----------------------------|
+      Betray | <score:me>,<score:opponen> | <score:me>,<score:opponen> |
+   ----------|----------------------------|----------------------------|
+
+Acces potential payoff in the payoff matrix like this:
+    game_log[my action, opponents action]
+    E.g. game_log[Action.BETRAY, Action.COOPERATE]
 '''
 
 class Contestant(ContestantTemplate):
