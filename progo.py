@@ -4,6 +4,7 @@ from tournament import Tournament
 # Config
 name = 'PROGO'
 desc = "Welcome to PROGO, a game where players compete by submitting a bot that they script themselves"
+
 epilog = 'Hope you enjoy playing! :)'
 available_games = {
     'rock_paper_scissor': ['rock_paper_scissor', 'rps'],
