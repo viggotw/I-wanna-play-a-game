@@ -1,4 +1,4 @@
-from games.generalized_prisonners_dilemma.contestant_template import ContestantTemplate, Action
+from games.generalized_prisoners_dilemma.contestant_template import ContestantTemplate, Action
 
 ''' GAME_LOG STRUCTURE
 {
@@ -10,7 +10,7 @@ from games.generalized_prisonners_dilemma.contestant_template import ContestantT
         'score': [0],
         'moves': [[]]
     }
-    'payoff_matrix': {
+    'game_board': {
         (Action.COOPERATE, Action.COOPERATE): (<int>,<int>)
         (Action.BETRAY,    Action.COOPERATE): (<int>,<int>)
         (Action.COOPERATE,    Action.BETRAY): (<int>,<int>)
@@ -35,9 +35,4 @@ Acces potential payoff in the payoff matrix like this:
 
 class Contestant(ContestantTemplate):
     def action(self, game_log:dict) -> Action:
-        opponent_prev_moves = game_log['opponents']['moves'][0]
-        if opponent_prev_moves:
-            if opponent_prev_moves[-1] == Action.BETRAY:
-                return Action.BETRAY
-                
         return Action.COOPERATE

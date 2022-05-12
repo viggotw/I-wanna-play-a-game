@@ -1,7 +1,7 @@
 import sys
 from games.game_environment_general import GameEnvironmentGeneral
-from games.generalized_prisonners_dilemma.contestant_template import Action
-from games.generalized_prisonners_dilemma.config import ITERATIONS, NUM_PLAYERS, TURN_BASED, WIN_CRITERIA, PAYOFF_MATRICES
+from games.generalized_prisoners_dilemma.contestant_template import Action
+from games.generalized_prisoners_dilemma.config import ITERATIONS, NUM_PLAYERS, TURN_BASED, WIN_CRITERIA, PAYOFF_MATRICES
 
 class GameEnvironment(GameEnvironmentGeneral):
     def __init__(self, suspense):
