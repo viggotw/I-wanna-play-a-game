@@ -1,6 +1,10 @@
 # PROGO
 Welcome to PROGO, a bot competition environment that allows you to both play games and create your own games.
 
+## Available games
+- [Rock Paper Scissor](/games/rock_paper_scissor/readme.md)
+- [Generalized Prisoner's Dilemma](/games/generalized_prisoners_dilemma/readme.md)
+
 ## Play a game
 ### Start a tournament
 1. Select the game you want to play. PROGO currently offer two games: `rock_paper_scissor` (`rps`) and `generalized_priso
