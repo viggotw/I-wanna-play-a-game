@@ -3,7 +3,8 @@ Welcome to PROGO, a bot competition environment that allows you to both play gam
 
 ## Play a game
 ### Start a tournament
-1. Select the game you want to play. PROGO currently offer two games: `rock_paper_scissor` (`rps`) and `generalized_prisonners_dilemma` (`gpd`)
+1. Select the game you want to play. PROGO currently offer two games: `rock_paper_scissor` (`rps`) and `generalized_priso
+ners_dilemma` (`gpd`)
 2. `python progo.py <game name>` (e.g. `python progo.py rock_paper_scissor`)
 
 If you would like to add some more suspense to your tournament, add `--suspense True` to the command. This will insert several delays into the tournament execution, which can be fun if human-made bots are playing against eachother.
